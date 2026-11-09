@@ -34,3 +34,7 @@ img{
   box-sizing:border-box;
   background-color:rgb(164, 224, 228);
 }
+
+button{
+  color:blue;
+}
