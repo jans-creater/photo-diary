@@ -73,5 +73,24 @@ addBtn.addEventListener('click',function(){
   mainTitle.textContent=`共${diaries.length}条日记`;
 });
 
+const keywordInput = document.querySelector('#keyword-input');
+const reviewBtn = document.querySelector('#生成回顾');
+const reviewBox = document.querySelector('#keyword-card');
+
+reviewBtn.addEventListener('click',function(){
+  const keyword = keywordInput.value;
+
+  let reviewHTML = `<div class="diary-card review-card"><h2>共${diaries.length}条日记·关键词:${keyword}</h2>`;
+
+  for(const one of diaries){
+    const line = `<p>${one.date} | ${one.title} | ${one.mood}</p>`;
+    reviewHTML += line;
+  }
+
+  reviewHTML += `</div>`;
+  reviewBox.innerHTML = reviewHTML;
+  keywordInput.value = '';
+});
+
 
 
