@@ -28,7 +28,7 @@ img{
 
 .diary-card{
   border:1px solid red;
-  padding:0px;
+  padding:12px;
   width:30%;
   min-width:300px;
   box-sizing:border-box;
@@ -40,7 +40,7 @@ button{
 }
 
 .review-card{
-  padding:0px;
+  padding:12px;
   background-color: aqua;
   
 }
