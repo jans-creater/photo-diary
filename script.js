@@ -119,5 +119,42 @@ reviewBtn.addEventListener('click',function(){
   keywordInput.value = '';
 });
 
+// const p = new Promise(function(){
+//   setTimeout(function(){('服务器回数据了');}, 2000);
+// });
+// p.then(function(data){console.log('1' + data);});
+// console.log('2我先执行了');
 
+const loadBtn = document.querySelector('#load');
+const statusBox = document.querySelector('#load-status');
 
+loadBtn.addEventListener('click',async function(){
+  statusBox.textContent = "加载中";
+  try{
+    console.log('A请求发出');
+
+    const response = await fetch('diaries.json');
+    const data = await response.json(response);
+
+    console.log('B数据拆好了');
+    await new Promise(r => setTimeout(r,1500));
+    console.log('C开始渲染');
+
+    let cardsHTML = '';
+    for(const one of data){
+      cardsHTML += `
+        <div class="diary-card">
+        <h2>${one.title}</h2>
+        <p>${one.text}</p>
+        <p>${one.mood}</p>
+        <img src="${one.img}" width="70%">
+        <p>${one.date}</p>
+        </div>
+        `;
+    }
+    cardList.innerHTML = cardsHTML;
+    statusBox.textContent = '加载完成,共${cardList.length}条';
+    }catch(e){
+      statusBox.textContent = '加载失败: ' + notice;
+    }
+});
