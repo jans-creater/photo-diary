@@ -6,8 +6,10 @@
     <link rel="stylesheet" href="style.css">
   </head>
   <body>
-
+    <header>
     <h1>我的照片日记</h1>
+    </header>
+
     <label>今日关键词<input id="keyword-input" type="text"  placeholder="写个词，例如：下雨"></label>
     <button id="生成回顾">生成回顾</button>
     <div id="keyword-card"> </div>
@@ -22,7 +24,7 @@
     <label>心情<input id="mood-input" type="text" placeholder="输入今天的心情"></label>
     <button id="add">新增日记</button>
 
-    <div class="all-diary-card" id="card-list"><!--装所有卡片-->
+    <main class="all-diary-card" id="card-list"><!--装所有卡片-->
       
       <!-- <div class="diary-card">
         <h2>第一条</h2>
@@ -45,8 +47,11 @@
         <img src="01.jpg" width="70%">
       </div>  -->
       
-    </div>
+    </main>
+
     <script src="script.js"></script>
+
+    <footer>照片日记 · 2026</footer>
 
   </body>
 </html>

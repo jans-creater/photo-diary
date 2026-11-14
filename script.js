@@ -28,13 +28,13 @@ const cardList = document.querySelector('#card-list');
 
 for(const one of diaries){
   const card = `
-    <div class="diary-card">
+    <article class="diary-card">
       <h2>${one.title}</h2>
       <p>${one.text}</p>
       <p>${one.mood}</p>
       <img src="${one.img}" width="70%">
       <p>${one.date}</p>
-    </div>
+    </article>
   `;
   cardList.innerHTML += card;
 }
@@ -75,13 +75,13 @@ addBtn.addEventListener('click',function(){
   localStorage.setItem('diaries',JSON.stringify(diaries));
 
   const card = `
-    <div class="diary-card">
+    <article class="diary-card">
       <h2>${newDiary.title}</h2>
       <p>${newDiary.mood}</p>
       <p>${newDiary.text}</p>
       <img src="01.jpg" width="70%">
       <p>${newDiary.date}</p>
-    </div>
+    </article>
   `;
 
   if(diaries.length === 1){
@@ -153,7 +153,7 @@ loadBtn.addEventListener('click',async function(){
         `;
     }
     cardList.innerHTML = cardsHTML;
-    statusBox.textContent = '加载完成,共${cardList.length}条';
+    statusBox.textContent = `加载完成,共${data.length}条`;
     }catch(e){
       statusBox.textContent = '加载失败: ' + notice;
     }
