@@ -23,11 +23,11 @@
 - 作用: 往日记里新加一条
 - 地址: http://localhost:3000/api/diaries
 - 方法: POST
-- 请求体: test = {"title"="测试","mood"="测试","date"="测试"}
+- 请求体: test = {"title":"测试","mood":"测试","date":"测试"}
 - 返回: 状态码200,返回的是JSON数组,包含 title/mood/date
 - 返回示例:[
-  {"title"="1","mood"="1","date"="1"}
-  {2}
-  {3}
-  {4}
+  {"title":"第一天","mood":"开心","date":"11.07"},
+ {"title":"第二天","mood":"开心","date":"11.08"},
+  {"title":"第三天","mood":"开心","date":"11.09"},
+  {"title":"测试","mood":"测试","date":"测试"}
 ]
