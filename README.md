@@ -16,6 +16,7 @@
 - 第10课: 利用promise
 - 第11课: 学会断点
 - 第12课: 命令行跑通第一个 Node 脚本，学会 export/import
+- 第13课: Express 做出第一个 GET/POST 接口
 
 ## 运行方式
 双击 index.html,用浏览器打开
