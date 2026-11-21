@@ -1,3 +1,5 @@
+// import { json } from "body-parser";
+
 console.log("JS 已接通");
 
 const greeting = "你好，照片日记";
@@ -131,14 +133,16 @@ const statusBox = document.querySelector('#load-status');
 loadBtn.addEventListener('click',async function(){
   statusBox.textContent = "加载中";
   try{
-    console.log('A请求发出');
+    // console.log('A请求发出');
 
     const response = await fetch('diaries.json');
     const data = await response.json(response);
 
-    console.log('B数据拆好了');
-    await new Promise(r => setTimeout(r,1500));
-    console.log('C开始渲染');
+    // console.log('B数据拆好了');
+    // await new Promise(r => setTimeout(r,1500));
+    // console.log('C开始渲染');
+
+    localStorage.setItem('diaries',JSON.stringify(data));
 
     let cardsHTML = '';
     for(const one of data){
@@ -155,6 +159,6 @@ loadBtn.addEventListener('click',async function(){
     cardList.innerHTML = cardsHTML;
     statusBox.textContent = `加载完成,共${data.length}条`;
     }catch(e){
-      statusBox.textContent = '加载失败: ' + notice;
+      statusBox.textContent = '加载失败: ' + e;
     }
 });
