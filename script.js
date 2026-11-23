@@ -67,40 +67,47 @@ const textInput = document.querySelector('#text-input');
 const moodInput = document.querySelector('#mood-input');
 const addBtn = document.querySelector('#add');
 
-addBtn.addEventListener('click',function(){
+addBtn.addEventListener('click', async function(){
   const title = titleInput.value;
   const text = textInput.value;
   const mood = moodInput.value;
 
   const newDiary = { title:title, mood:mood, text:text, date:"11.10", img:"01.jpg"};
-  diaries.push(newDiary);
-  localStorage.setItem('diaries',JSON.stringify(diaries));
+  const response = await fetch('http://localhost:3000/api/diaries',{
+    method: 'POST',
+    headers: {'Content-Type':'application/json'},
+    body: JSON.stringify(newDiary)
+  })
+  const backDiaries = await response.json();
+  // diaries.push(newDiary);
+  // localStorage.setItem('diaries',JSON.stringify(diaries));
 
-  const card = `
+  cardList.innerHTML = '';
+  for(const one of backDiaries){
+    cardList.innerHTML += `
     <article class="diary-card">
-      <h2>${newDiary.title}</h2>
-      <p>${newDiary.mood}</p>
-      <p>${newDiary.text}</p>
+      <h2>${one.title}</h2>
+      <p>${one.mood}</p>
+      <p>${one.text}</p>
       <img src="01.jpg" width="70%">
-      <p>${newDiary.date}</p>
+      <p>${one.date}</p>
     </article>
   `;
-
-  if(diaries.length === 1){
-    cardList.innerHTML = card;
-  }else{
-    cardList.innerHTML += card;
   }
-  
+  // if(diaries.length === 1){
+  //   cardList.innerHTML = card;
+  // }else{
+  //   cardList.innerHTML += card;
+  // }
 
   titleInput.value = '';
   textInput.value = '';
   moodInput.value = '';
 
-  mainTitle.textContent=`共${diaries.length}条日记`;
+  mainTitle.textContent=`共${backDiaries.length}条日记`;
 });
 
-mainTitle.textContent=`共${diaries.length}条日记`;
+// mainTitle.textContent=`共${backDiaries.length}条日记`;
 
 const keywordInput = document.querySelector('#keyword-input');
 const reviewBtn = document.querySelector('#生成回顾');
@@ -135,8 +142,8 @@ loadBtn.addEventListener('click',async function(){
   try{
     // console.log('A请求发出');
 
-    const response = await fetch('diaries.json');
-    const data = await response.json(response);
+    const response = await fetch('http://localhost:3000/api/diaries');
+    const data = await response.json();
 
     // console.log('B数据拆好了');
     // await new Promise(r => setTimeout(r,1500));
@@ -158,6 +165,8 @@ loadBtn.addEventListener('click',async function(){
     }
     cardList.innerHTML = cardsHTML;
     statusBox.textContent = `加载完成,共${data.length}条`;
+    mainTitle.textContent = `共${data.length}条`;
+
     }catch(e){
       statusBox.textContent = '加载失败: ' + e;
     }
