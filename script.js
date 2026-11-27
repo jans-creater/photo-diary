@@ -72,7 +72,7 @@ addBtn.addEventListener('click', async function(){
   const text = textInput.value;
   const mood = moodInput.value;
 
-  const newDiary = { title:title, mood:mood, text:text, date:"11.10", img:"01.jpg"};
+  const newDiary = { title:title, mood:mood, text:text, date:"11.10", img:uploadedImg};
   const response = await fetch('http://localhost:3000/api/diaries',{
     method: 'POST',
     headers: {'Content-Type':'application/json'},
@@ -89,7 +89,7 @@ addBtn.addEventListener('click', async function(){
       <h2>${one.title}</h2>
       <p>${one.mood}</p>
       <p>${one.text}</p>
-      <img src="01.jpg" width="70%">
+      <img src="${one.img}" width="70%">
       <p>${one.date}</p>
     </article>
   `;
@@ -171,3 +171,35 @@ loadBtn.addEventListener('click',async function(){
       statusBox.textContent = '加载失败: ' + e;
     }
 });
+
+
+const imageInput = document.querySelector('#image-input');
+const uploadBtn = document.querySelector('#upload');
+const preview = document.querySelector('#preview');
+const uploadStatus = document.querySelector('#upload-status')
+let uploadedImg = '';
+
+const savedImg = localStorage.getItem('uploadedImg');
+if(savedImg){ uploadedImg = savedImg; }  
+  uploadBtn.addEventListener('click',async function(){
+    try {
+  uploadStatus.textContent = '上传中...';
+  const file = imageInput.files[0];
+  const form = new FormData();
+  form.append('image',file);
+
+  const response = await fetch('http://localhost:3000/api/upload',{
+    method:'POST',
+    body:form
+  });
+  const result = await response.json();
+  uploadedImg = result.path;
+  localStorage.setItem('uploadedImg', uploadedImg);
+  preview.src = uploadedImg;
+  uploadStatus.textContent = '上传成功';
+  } 
+    catch (e) {
+      uploadStatus.textContent = '上传失败' + e;
+}
+});
+

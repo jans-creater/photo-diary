@@ -1,9 +1,11 @@
 import express from 'express';
 import mysql from 'mysql2/promise';
+import multer from 'multer';
+
 const pool = mysql.createPool({
   host: 'localhost',
   user: 'root',
-  password: '******',
+  password: '131713',
   database: 'photo_diary'
 });
 import { diaries,owner } from './diaries.js';
@@ -18,6 +20,21 @@ app.use(function(req,res,next){
   next();
 });
 
+app.use('/uploads',express.static('uploads'));
+
+const storage = multer.diskStorage({
+  destination: function(req,file,cb){
+    cb(null,'uploads/');
+  },
+  filename: function(req,file,cb){
+    cb(null,file.originalname);
+  }
+});
+const upload = multer({ storage: storage });
+
+app.post('/api/upload', upload.single('image'),function(req,res){
+  res.json({path: 'http://localhost:3000/uploads/' + req.file.originalname });
+});
 
 app.get('/api/diaries',async function(req,res){
   // res.json(diaries);
